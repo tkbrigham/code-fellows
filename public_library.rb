@@ -102,3 +102,16 @@ s1.books
 
 puts "new library:"
 l.all_books
+
+puts "-----------------------\ns2 before addition"
+s2.books
+
+book_to_add = b4
+puts "adding: #{book_to_add.inspect}"
+s2.add_books(book_to_add)
+
+puts "s2 after delete"
+s2.books
+
+puts "new library:"
+l.all_books
