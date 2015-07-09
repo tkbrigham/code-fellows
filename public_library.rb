@@ -3,12 +3,15 @@ class Library
     @shelves = shelves
   end
 
+  ## Allows for addition of multiple shelves at once, or just
+  ## a single shelf. Can accept multiple parameters or an array.
   def add_shelves(*shelves)
-    shelves.each do |shelf|
+    shelves.flatten.each do |shelf|
       @shelves << shelf
     end
   end
 
+  ## Prints all books in library, listed by shelf.
   def all_books
     puts "All Library Books:"
     @shelves.each do |shelf|
@@ -23,14 +26,18 @@ class Shelf
     @books = books
   end
 
+  ## Allows for addition of multiple books at once, or just
+  ## a single book. Can accept multiple parameters or an array.
   def add_books(*books)
-    books.each do |book|
+    books.flatten.each do |book|
       @books << book
     end
   end
 
+  ## Allows for deletion of multiple books at once, or just
+  ## a single book. Can accept multiple parameters or an array.
   def remove_books(*books)
-    books.each do |test_book|
+    books.flatten.each do |test_book|
       answer = @books.select do |existing_book|
         test_book == existing_book
       end
@@ -38,6 +45,7 @@ class Shelf
     end
   end
 
+  ## Prints all books in shelf.
   def books
     puts "  Books in #{@shelf_name} shelf:"
     @books.each do |book|
@@ -53,10 +61,14 @@ class Book
     @author = author
   end
 
+  ## Prints Title and Author of book.
   def display
     puts "    Title: #{@title}, Author: #{@author}"
   end
 end
+
+
+## COMMANDS
 
 puts "Instantiating Library"
 l = Library.new
@@ -78,7 +90,6 @@ b8 = Book.new("Eighth Book", "Fourth Author")
 b9 = Book.new("Ninth Book", "Fourth Author")
 b10 = Book.new("Tenth Book", "Fourth Author")
 
-
 puts "Adding shelves to library"
 l.add_shelves(s1, s2, s3)
 
@@ -87,9 +98,11 @@ s1.add_books(b1, b4, b5, b6)
 s2.add_books(b2, b3)
 s3.add_books(b7, b8, b9, b10)
 
+## Demonstrate fully built library
 puts "--------------------- \nPutting library"
 l.all_books
 
+## Demonstrate how deleting a book works
 puts "--------------------- \ns1 before delete"
 s1.books
 
@@ -103,14 +116,15 @@ s1.books
 puts "new library:"
 l.all_books
 
+## Demonstrate how adding a book works
 puts "-----------------------\ns2 before addition"
 s2.books
 
-book_to_add = b4
-puts "adding: #{book_to_add.inspect}"
-s2.add_books(book_to_add)
+books_to_add = [b4, Book.new("Added Book","Unknown")]
+puts "adding: #{books_to_add.inspect}"
+s2.add_books(books_to_add)
 
-puts "s2 after delete"
+puts "s2 after addition"
 s2.books
 
 puts "new library:"
